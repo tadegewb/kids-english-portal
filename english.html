@@ -11,8 +11,6 @@
         height: 100vh;
         overflow: hidden;
     }
-
-    /* Sidebar */
     #sidebar {
         width: 320px;
         background-color: #ffefd5;
@@ -52,24 +50,18 @@
     .playlist-button:hover {
         background-color: #ff7f50;
     }
-
-    /* Main content */
     #main-content {
         flex: 1;
         background-color: #f0f8ff;
         display: flex;
         justify-content: center;
         align-items: center;
-        overflow: hidden;
         position: relative;
     }
-    iframe {
+    #player {
         width: 100%;
         height: 100%;
-        border: none;
     }
-
-    /* Unmute Button */
     #unmute-btn {
         position: absolute;
         bottom: 20px;
@@ -93,7 +85,6 @@
 <div id="sidebar">
     <h2>Kids English Playlists</h2>
 
-    <!-- Blippi Section -->
     <div class="section-title">Blippi</div>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY')">Blippi – Main</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH')">Blippi – Additional</button>
@@ -106,7 +97,6 @@
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
 
-    <!-- Alphablocks / Fun English -->
     <div class="section-title">Alphablocks / Fun English</div>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
@@ -126,7 +116,6 @@
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
 
-    <!-- Other Kids Learning -->
     <div class="section-title">Other Kids Learning</div>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
@@ -135,21 +124,42 @@
 </div>
 
 <div id="main-content">
-    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&mute=1&loop=1&rel=0&modestbranding=1&playlist=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <div id="player"></div>
     <button id="unmute-btn" onclick="unmuteAndPlay()">Play with Sound</button>
 </div>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
+let player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        height: '100%',
+        width: '100%',
+        playerVars: {
+            autoplay: 0,
+            controls: 1,
+            rel: 0,
+            modestbranding: 1,
+            loop: 1,
+            playlist: 'PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY'
+        }
+    });
+}
+
 function changePlaylist(playlistId) {
-    const player = document.getElementById('player');
-    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&mute=1&loop=1&rel=0&modestbranding=1&playlist=${playlistId}`;
+    if(player) {
+        player.loadPlaylist({list: playlistId, index:0, suggestedQuality: 'large'});
+        player.playVideo(); // Clicked → user gesture
+    }
 }
 
 function unmuteAndPlay() {
-    const iframe = document.getElementById('player');
-    iframe.src = iframe.src.replace('&mute=1', '');
+    if(player) {
+        player.unMute();
+        player.playVideo();
+    }
 }
 </script>
-
 </body>
 </html>
