@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kids English Fun Portal</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+    #sidebar {
+        width: 320px;
+        background-color: #ffefd5;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        border-right: 2px solid #ff4500;
+    }
+    #sidebar h2 {
+        color: #ff4500;
+        font-size: 1.5em;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .section-title {
+        font-weight: bold;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        color: #ff6347;
+    }
+    .playlist-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: #f4a460;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.95em;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.3s;
+    }
+    .playlist-button:hover { background-color: #ff7f50; }
+    #main-content {
+        flex: 1;
+        background-color: #f0f8ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        flex-direction: column;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    #fullscreen-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+        z-index: 10;
+    }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h2>Kids English Playlists</h2>
+
+    <!-- Blippi Section -->
+    <div class="section-title">Blippi</div>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY')">Blippi – Main</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH')">Blippi – Additional</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Y8gF2c5S6P0nkB_KtzyYI')">Blippi – More</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P80DI02tNYuU8wCz9371Idj')">Blippi – Videos</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-KMFBboA9TAFbl1wOit2xp')">Blippi – Extra</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8dGkMWno61zm8VQjul1aNL')">Blippi – Fun & Learning</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P_WkJA2PWXozxTF4VaRFoP_')">Blippi – More Episodes</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-T0XZZJBZwfDHYQXEA_Ok5')">Blippi – Adventures</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
+    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
+
+    <!-- Alphablocks / Fun English Section -->
+    <div class="section-title">Alphablocks / Fun English</div>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR30BHysDSi4eEwoHuG1PFE')">Alphablocks 3</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR9c1Fc4Cgu2Z1cqES8GFmX')">Alphablocks 4</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1qStt2D36-qwkJ5UlPikn')">Alphablocks 5</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS_K7QKO_EUzKYrMio_V-su')">Fun English 6</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsRbDZjSJvaalHS6qyz8UnQh')">Fun English 7</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTd1gBlyALVOZUBXn-LQ8_K')">Fun English 8</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTyT345VsUeCeh0WUWVg-F4')">Fun English 9</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTcjHQfENs9cWwmNpPadN-k')">Fun English 10</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTK4TCfqSisYbZ-IRgZa1p5')">Fun English 11</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1_UobIMPTK4chMoGMg2fx')">Fun English 12</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQjjVTIFw1H9QvH0PCC_Bsy')">Fun English 13</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT9xCuen20Z-wLArpp8PM98')">Fun English 14</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS3gNBwSuYtWvnnILFq0rLO')">Fun English 15</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
+    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
+
+    <!-- Little Fox / Other Kids -->
+    <div class="section-title">Other Kids Learning</div>
+    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
+    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
+    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA39f-Wx9zs1C74f-m7ekJT4q')">Kids Fun 3</button>
+    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_BedJGknkubpD-ffJKO4Z1')">Kids Fun 4</button>
+</div>
+
+<div id="main-content">
+    <button id="fullscreen-btn" onclick="goFullScreen()">Full Screen</button>
+    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3" allowfullscreen allow="autoplay; fullscreen"></iframe>
+</div>
+
+<script>
+function changePlaylist(playlistId) {
+    const player = document.getElementById('player');
+    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3`;
+}
+
+function goFullScreen() {
+    const iframe = document.getElementById('player');
+    if (iframe.requestFullscreen) iframe.requestFullscreen();
+    else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+    else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+}
+</script>
+
+</body>
+</html>
