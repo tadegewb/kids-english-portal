@@ -2,19 +2,80 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Kids English Fun Portal - Safe Mode</title>
+<title>Kids English Fun Portal</title>
 <style>
-    body { margin: 0; font-family: Arial, sans-serif; display: flex; height: 100vh; overflow: hidden; }
-    #sidebar { width: 320px; background-color: #ffefd5; padding: 20px; box-sizing: border-box; overflow-y: auto; border-right: 2px solid #ff4500; }
-    #sidebar h2 { color: #ff4500; font-size: 1.5em; margin-top: 0; margin-bottom: 10px; text-align: center; }
-    .section-title { font-weight: bold; margin-top: 15px; margin-bottom: 5px; font-size: 1.1em; color: #ff6347; }
-    .playlist-button { display: block; width: 100%; padding: 10px; margin-bottom: 5px; background-color: #f4a460; color: white; border: none; border-radius: 5px; font-size: 0.95em; cursor: pointer; text-align: left; transition: background 0.3s; }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+    #sidebar {
+        width: 320px;
+        background-color: #ffefd5;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        border-right: 2px solid #ff4500;
+    }
+    #sidebar h2 {
+        color: #ff4500;
+        font-size: 1.5em;
+        margin-top: 0;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    .section-title {
+        font-weight: bold;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        font-size: 1.1em;
+        color: #ff6347;
+    }
+    .playlist-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 5px;
+        background-color: #f4a460;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 0.95em;
+        cursor: pointer;
+        text-align: left;
+        transition: background 0.3s;
+    }
     .playlist-button:hover { background-color: #ff7f50; }
-    #main-content { flex: 1; background-color: #f0f8ff; display: flex; justify-content: center; align-items: center; position: relative; }
-    #player { width: 100%; height: 100%; pointer-events: auto; }
-    #overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; pointer-events: none; }
-    #start-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 20px 30px; font-size: 1.5em; background-color: #ff6347; color: white; border: none; border-radius: 10px; cursor: pointer; z-index: 10; }
-    #start-btn:hover { background-color: #ff4500; }
+    #main-content {
+        flex: 1;
+        background-color: #f0f8ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        flex-direction: column;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+    #fullscreen-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 8px 12px;
+        background-color: #ff4500;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9em;
+        z-index: 10;
+    }
 </style>
 </head>
 <body>
@@ -22,6 +83,7 @@
 <div id="sidebar">
     <h2>Kids English Playlists</h2>
 
+    <!-- Blippi Section -->
     <div class="section-title">Blippi</div>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY')">Blippi – Main</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH')">Blippi – Additional</button>
@@ -34,6 +96,7 @@
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
 
+    <!-- Alphablocks / Fun English Section -->
     <div class="section-title">Alphablocks / Fun English</div>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
@@ -53,6 +116,7 @@
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
 
+    <!-- Little Fox / Other Kids -->
     <div class="section-title">Other Kids Learning</div>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
@@ -61,44 +125,21 @@
 </div>
 
 <div id="main-content">
-    <div id="player"></div>
-    <div id="overlay"></div>
-    <button id="start-btn" onclick="startPortal()">Start Playing</button>
+    <button id="fullscreen-btn" onclick="goFullScreen()">Full Screen</button>
+    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3" allowfullscreen allow="autoplay; fullscreen"></iframe>
 </div>
 
-<script src="https://www.youtube.com/iframe_api"></script>
 <script>
-let player;
-
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-        height: '100%',
-        width: '100%',
-        playerVars: {
-            autoplay: 0,
-            controls: 1,
-            rel: 0,
-            modestbranding: 1,
-            loop: 1,
-            disablekb: 1,
-            fs: 1,
-            playlist: ''
-        }
-    });
-}
-
-function startPortal() {
-    document.getElementById('start-btn').style.display = 'none';
-    player.loadPlaylist({list: 'PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY', index:0, suggestedQuality:'large'});
-    player.playVideo();
-}
-
-// Switch playlist (user gesture ensures Safari 16 works)
 function changePlaylist(playlistId) {
-    if(player) {
-        player.loadPlaylist({list: playlistId, index:0, suggestedQuality: 'large'});
-        player.playVideo();
-    }
+    const player = document.getElementById('player');
+    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3`;
+}
+
+function goFullScreen() {
+    const iframe = document.getElementById('player');
+    if (iframe.requestFullscreen) iframe.requestFullscreen();
+    else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+    else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
 }
 </script>
 
