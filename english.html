@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Kids English Fun Portal</title>
+<title>Kids English Fun Portal - Safe Mode</title>
 <style>
     body {
         margin: 0;
@@ -61,6 +61,15 @@
     #player {
         width: 100%;
         height: 100%;
+        pointer-events: auto; /* allow clicks only on player */
+    }
+    #overlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5;
+        pointer-events: none; /* disables accidental clicks outside player */
     }
     #unmute-btn {
         position: absolute;
@@ -91,40 +100,19 @@
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Y8gF2c5S6P0nkB_KtzyYI')">Blippi – More</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P80DI02tNYuU8wCz9371Idj')">Blippi – Videos</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-KMFBboA9TAFbl1wOit2xp')">Blippi – Extra</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8dGkMWno61zm8VQjul1aNL')">Blippi – Fun & Learning</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P_WkJA2PWXozxTF4VaRFoP_')">Blippi – More Episodes</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-T0XZZJBZwfDHYQXEA_Ok5')">Blippi – Adventures</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
 
     <div class="section-title">Alphablocks / Fun English</div>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR30BHysDSi4eEwoHuG1PFE')">Alphablocks 3</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR9c1Fc4Cgu2Z1cqES8GFmX')">Alphablocks 4</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1qStt2D36-qwkJ5UlPikn')">Alphablocks 5</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS_K7QKO_EUzKYrMio_V-su')">Fun English 6</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsRbDZjSJvaalHS6qyz8UnQh')">Fun English 7</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTd1gBlyALVOZUBXn-LQ8_K')">Fun English 8</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTyT345VsUeCeh0WUWVg-F4')">Fun English 9</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTcjHQfENs9cWwmNpPadN-k')">Fun English 10</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTK4TCfqSisYbZ-IRgZa1p5')">Fun English 11</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1_UobIMPTK4chMoGMg2fx')">Fun English 12</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQjjVTIFw1H9QvH0PCC_Bsy')">Fun English 13</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT9xCuen20Z-wLArpp8PM98')">Fun English 14</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS3gNBwSuYtWvnnILFq0rLO')">Fun English 15</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
 
     <div class="section-title">Other Kids Learning</div>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA39f-Wx9zs1C74f-m7ekJT4q')">Kids Fun 3</button>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_BedJGknkubpD-ffJKO4Z1')">Kids Fun 4</button>
 </div>
 
 <div id="main-content">
     <div id="player"></div>
+    <div id="overlay"></div>
     <button id="unmute-btn" onclick="unmuteAndPlay()">Play with Sound</button>
 </div>
 
@@ -142,18 +130,25 @@ function onYouTubeIframeAPIReady() {
             rel: 0,
             modestbranding: 1,
             loop: 1,
+            disablekb: 1,
+            fs: 1,          // allow fullscreen
             playlist: 'PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY'
+        },
+        events: {
+            'onReady': (event) => event.target.mute()
         }
     });
 }
 
+// Change playlist on button click (Safari 16 compatible)
 function changePlaylist(playlistId) {
     if(player) {
         player.loadPlaylist({list: playlistId, index:0, suggestedQuality: 'large'});
-        player.playVideo(); // Clicked → user gesture
+        player.playVideo();
     }
 }
 
+// Unmute sound with user gesture
 function unmuteAndPlay() {
     if(player) {
         player.unMute();
@@ -161,5 +156,6 @@ function unmuteAndPlay() {
     }
 }
 </script>
+
 </body>
 </html>
