@@ -11,6 +11,8 @@
         height: 100vh;
         overflow: hidden;
     }
+
+    /* Sidebar */
     #sidebar {
         width: 320px;
         background-color: #ffefd5;
@@ -47,7 +49,11 @@
         text-align: left;
         transition: background 0.3s;
     }
-    .playlist-button:hover { background-color: #ff7f50; }
+    .playlist-button:hover {
+        background-color: #ff7f50;
+    }
+
+    /* Main content */
     #main-content {
         flex: 1;
         background-color: #f0f8ff;
@@ -56,25 +62,29 @@
         align-items: center;
         overflow: hidden;
         position: relative;
-        flex-direction: column;
     }
     iframe {
         width: 100%;
         height: 100%;
         border: none;
     }
-    #fullscreen-btn {
+
+    /* Unmute Button */
+    #unmute-btn {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 8px 12px;
-        background-color: #ff4500;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+        font-size: 1em;
+        background-color: #ff6347;
         color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 0.9em;
         z-index: 10;
+    }
+    #unmute-btn:hover {
+        background-color: #ff4500;
     }
 </style>
 </head>
@@ -96,7 +106,7 @@
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
     <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
 
-    <!-- Alphablocks / Fun English Section -->
+    <!-- Alphablocks / Fun English -->
     <div class="section-title">Alphablocks / Fun English</div>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
@@ -116,7 +126,7 @@
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
     <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
 
-    <!-- Little Fox / Other Kids -->
+    <!-- Other Kids Learning -->
     <div class="section-title">Other Kids Learning</div>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
     <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
@@ -125,21 +135,19 @@
 </div>
 
 <div id="main-content">
-    <button id="fullscreen-btn" onclick="goFullScreen()">Full Screen</button>
-    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&mute=1&loop=1&rel=0&modestbranding=1&playlist=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <button id="unmute-btn" onclick="unmuteAndPlay()">Play with Sound</button>
 </div>
 
 <script>
 function changePlaylist(playlistId) {
     const player = document.getElementById('player');
-    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3`;
+    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&mute=1&loop=1&rel=0&modestbranding=1&playlist=${playlistId}`;
 }
 
-function goFullScreen() {
+function unmuteAndPlay() {
     const iframe = document.getElementById('player');
-    if (iframe.requestFullscreen) iframe.requestFullscreen();
-    else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-    else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+    iframe.src = iframe.src.replace('&mute=1', '');
 }
 </script>
 
