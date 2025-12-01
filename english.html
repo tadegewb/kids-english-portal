@@ -1,147 +1,308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Kids English Fun Portal</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kids English — Strict Fullscreen Portal</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        display: flex;
-        height: 100vh;
-        overflow: hidden;
-    }
-    #sidebar {
-        width: 320px;
-        background-color: #ffefd5;
-        padding: 20px;
-        box-sizing: border-box;
-        overflow-y: auto;
-        border-right: 2px solid #ff4500;
-    }
-    #sidebar h2 {
-        color: #ff4500;
-        font-size: 1.5em;
-        margin-top: 0;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    .section-title {
-        font-weight: bold;
-        margin-top: 15px;
-        margin-bottom: 5px;
-        font-size: 1.1em;
-        color: #ff6347;
-    }
-    .playlist-button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 5px;
-        background-color: #f4a460;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 0.95em;
-        cursor: pointer;
-        text-align: left;
-        transition: background 0.3s;
-    }
-    .playlist-button:hover { background-color: #ff7f50; }
-    #main-content {
-        flex: 1;
-        background-color: #f0f8ff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        position: relative;
-        flex-direction: column;
-    }
-    iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-    }
-    #fullscreen-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 8px 12px;
-        background-color: #ff4500;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 0.9em;
-        z-index: 10;
-    }
+  :root{
+    --accent:#ff6f00;
+    --soft:#fff8ef;
+    --side:#fff2e6;
+    --btn:#ff8a50;
+    --muted:#6b6b6b;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter, "Comic Sans MS", Arial, sans-serif;background:linear-gradient(180deg,#fff7ec,#fff1dc)}
+  .app{display:flex;height:100vh;overflow:hidden}
+  nav.sidebar{
+    width:320px;background:var(--side);padding:18px;border-right:4px solid var(--accent);overflow:auto;
+  }
+  .brand{font-size:1.5rem;color:var(--accent);text-align:center;font-weight:800;margin-bottom:12px}
+  .subtitle{font-size:0.9rem;color:var(--muted);text-align:center;margin-bottom:14px}
+  .section-title{color:#d84315;font-weight:700;margin-top:14px;margin-bottom:8px}
+  .link-btn{
+    display:flex;align-items:center;justify-content:center;padding:12px 10px;margin-bottom:8px;border-radius:10px;
+    background:linear-gradient(0deg,var(--btn),#ff7043);color:#fff;text-decoration:none;font-weight:700;
+    box-shadow:0 6px 14px rgba(0,0,0,.08);cursor:pointer;border:0;
+  }
+  .link-btn.small{font-size:0.9rem;padding:9px}
+  .link-btn:active{transform:scale(.995)}
+  .main{flex:1;position:relative;display:flex;align-items:center;justify-content:center;background:#fffaf3}
+  .player-wrap{position:absolute;inset:0;padding:8px}
+  .player-frame{width:100%;height:100%;border-radius:6px;overflow:hidden;background:black}
+  #player-iframe{width:100%;height:100%;border:0;background:#000}
+  /* Start overlay */
+  #start-overlay{
+    position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:40;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+  }
+  .start-btn{
+    background:linear-gradient(0deg,var(--accent),#ff7a2b);color:#fff;padding:18px 26px;border-radius:14px;border:0;font-size:1.25rem;font-weight:800;cursor:pointer;
+    box-shadow:0 10px 22px rgba(255,111,0,.18);
+  }
+  .hint{color:var(--muted);font-size:0.95rem;text-align:center}
+  /* fullscreen icon button */
+  #fs-btn{position:absolute;top:12px;right:12px;z-index:45;background:var(--accent);color:#fff;padding:10px 14px;border-radius:10px;border:0;cursor:pointer;font-weight:700;box-shadow:0 6px 12px rgba(0,0,0,.12)}
+  #reload-msg{position:absolute;left:50%;top:20px;transform:translateX(-50%);z-index:45;background:#fff2e6;padding:8px 12px;border-radius:10px;border:1px solid #ffd0b3;color:#8b3d00;display:none}
+  /* responsive */
+  @media (max-width:900px){ nav.sidebar{width:260px}}
 </style>
 </head>
 <body>
+<div class="app">
+  <nav class="sidebar" aria-label="Playlists">
+    <div class="brand">Kids English Portal</div>
+    <div class="subtitle">Click a playlist to play — portal only, no YouTube search</div>
 
-<div id="sidebar">
-    <h2>Kids English Playlists</h2>
-
-    <!-- Blippi Section -->
+    <!-- Blippi -->
     <div class="section-title">Blippi</div>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY')">Blippi – Main</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH')">Blippi – Additional</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Y8gF2c5S6P0nkB_KtzyYI')">Blippi – More</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P80DI02tNYuU8wCz9371Idj')">Blippi – Videos</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-KMFBboA9TAFbl1wOit2xp')">Blippi – Extra</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8dGkMWno61zm8VQjul1aNL')">Blippi – Fun & Learning</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P_WkJA2PWXozxTF4VaRFoP_')">Blippi – More Episodes</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P-T0XZZJBZwfDHYQXEA_Ok5')">Blippi – Adventures</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P8SAKMsRUMbE8fGJPzkEdk')">Blippi – Fun Learning</button>
-    <button class="playlist-button" onclick="changePlaylist('PLzgk_uTg08P9Vp43AyOI-NBNocoIyOJ9C')">Blippi – Collaborations</button>
+    <a class="link-btn" href="?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY" data-list="PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY">Blippi — Main</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH" data-list="PLzgk_uTg08P8yA3Vv50IzTNbr1fMCeQjH">Blippi — Additional</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P9Y8gF2c5S6P0nkB_KtzyYI" data-list="PLzgk_uTg08P9Y8gF2c5S6P0nkB_KtzyYI">Blippi — More</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P80DI02tNYuU8wCz9371Idj" data-list="PLzgk_uTg08P80DI02tNYuU8wCz9371Idj">Blippi — Videos</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P-KMFBboA9TAFbl1wOit2xp" data-list="PLzgk_uTg08P-KMFBboA9TAFbl1wOit2xp">Blippi — Extra</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P8dGkMWno61zm8VQjul1aNL" data-list="PLzgk_uTg08P8dGkMWno61zm8VQjul1aNL">Blippi — Fun & Learning</a>
+    <a class="link-btn" href="?list=PLzgk_uTg08P_WkJA2PWXozxTF4VaRFoP_" data-list="PLzgk_uTg08P_WkJA2PWXozxTF4VaRFoP_">Blippi — Episodes</a>
 
-    <!-- Alphablocks / Fun English Section -->
+    <!-- Alphablocks & Fun English -->
     <div class="section-title">Alphablocks / Fun English</div>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQW1S5cq34YokcPVw6avVko')">Alphablocks 1</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP')">Alphablocks 2</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR30BHysDSi4eEwoHuG1PFE')">Alphablocks 3</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsR9c1Fc4Cgu2Z1cqES8GFmX')">Alphablocks 4</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1qStt2D36-qwkJ5UlPikn')">Alphablocks 5</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS_K7QKO_EUzKYrMio_V-su')">Fun English 6</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsRbDZjSJvaalHS6qyz8UnQh')">Fun English 7</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTd1gBlyALVOZUBXn-LQ8_K')">Fun English 8</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTyT345VsUeCeh0WUWVg-F4')">Fun English 9</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTcjHQfENs9cWwmNpPadN-k')">Fun English 10</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTK4TCfqSisYbZ-IRgZa1p5')">Fun English 11</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT1_UobIMPTK4chMoGMg2fx')">Fun English 12</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsQjjVTIFw1H9QvH0PCC_Bsy')">Fun English 13</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsT9xCuen20Z-wLArpp8PM98')">Fun English 14</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsS3gNBwSuYtWvnnILFq0rLO')">Fun English 15</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh')">Fun English 16</button>
-    <button class="playlist-button" onclick="changePlaylist('PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO')">Fun English 17</button>
+    <a class="link-btn" href="?list=PLDuxenf8jCsQW1S5cq34YokcPVw6avVko" data-list="PLDuxenf8jCsQW1S5cq34YokcPVw6avVko">Alphablocks 1</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP" data-list="PLDuxenf8jCsR75KmiXP3-DhDJUHy4oJeP">Alphablocks 2</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsR30BHysDSi4eEwoHuG1PFE" data-list="PLDuxenf8jCsR30BHysDSi4eEwoHuG1PFE">Alphablocks 3</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsR9c1Fc4Cgu2Z1cqES8GFmX" data-list="PLDuxenf8jCsR9c1Fc4Cgu2Z1cqES8GFmX">Alphablocks 4</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsT1qStt2D36-qwkJ5UlPikn" data-list="PLDuxenf8jCsT1qStt2D36-qwkJ5UlPikn">Alphablocks 5</a>
 
-    <!-- Little Fox / Other Kids -->
-    <div class="section-title">Other Kids Learning</div>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u')">Kids Fun 1</button>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ')">Kids Fun 2</button>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA39f-Wx9zs1C74f-m7ekJT4q')">Kids Fun 3</button>
-    <button class="playlist-button" onclick="changePlaylist('PLTYeDakuqA3_BedJGknkubpD-ffJKO4Z1')">Kids Fun 4</button>
-</div>
+    <div class="section-title">Fun English (more)</div>
+    <a class="link-btn" href="?list=PLDuxenf8jCsS_K7QKO_EUzKYrMio_V-su" data-list="PLDuxenf8jCsS_K7QKO_EUzKYrMio_V-su">Fun English 6</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsRbDZjSJvaalHS6qyz8UnQh" data-list="PLDuxenf8jCsRbDZjSJvaalHS6qyz8UnQh">Fun English 7</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsTd1gBlyALVOZUBXn-LQ8_K" data-list="PLDuxenf8jCsTd1gBlyALVOZUBXn-LQ8_K">Fun English 8</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsTyT345VsUeCeh0WUWVg-F4" data-list="PLDuxenf8jCsTyT345VsUeCeh0WUWVg-F4">Fun English 9</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsTcjHQfENs9cWwmNpPadN-k" data-list="PLDuxenf8jCsTcjHQfENs9cWwmNpPadN-k">Fun English 10</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsTK4TCfqSisYbZ-IRgZa1p5" data-list="PLDuxenf8jCsTK4TCfqSisYbZ-IRgZa1p5">Fun English 11</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsT1_UobIMPTK4chMoGMg2fx" data-list="PLDuxenf8jCsT1_UobIMPTK4chMoGMg2fx">Fun English 12</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsQjjVTIFw1H9QvH0PCC_Bsy" data-list="PLDuxenf8jCsQjjVTIFw1H9QvH0PCC_Bsy">Fun English 13</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsT9xCuen20Z-wLArpp8PM98" data-list="PLDuxenf8jCsT9xCuen20Z-wLArpp8PM98">Fun English 14</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsS3gNBwSuYtWvnnILFq0rLO" data-list="PLDuxenf8jCsS3gNBwSuYtWvnnILFq0rLO">Fun English 15</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh" data-list="PLDuxenf8jCsTX8jcfEwnvdzw0_pg05zHh">Fun English 16</a>
+    <a class="link-btn" href="?list=PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO" data-list="PLDuxenf8jCsSLr3bX2hDIlcTANR3kmxTO">Fun English 17</a>
 
-<div id="main-content">
-    <button id="fullscreen-btn" onclick="goFullScreen()">Full Screen</button>
-    <iframe id="player" src="https://www.youtube.com/embed/videoseries?list=PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3" allowfullscreen allow="autoplay; fullscreen"></iframe>
+    <!-- Little Fox and others -->
+    <div class="section-title">Stories & Little Fox</div>
+    <a class="link-btn" href="?list=PL6QDEp1TTG3OwJl-50AQ1aR9jZ3rH0XkM" data-list="PL6QDEp1TTG3OwJl-50AQ1aR9jZ3rH0XkM">Little Fox — Stories</a>
+
+    <div class="section-title">More Kids</div>
+    <a class="link-btn" href="?list=PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u" data-list="PLTYeDakuqA3_crtlnyYCYn14OpkxAIU7u">Kids Fun 1</a>
+    <a class="link-btn" href="?list=PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ" data-list="PLTYeDakuqA3-BjjUtmR-FSI8tnk9_yPCJ">Kids Fun 2</a>
+    <a class="link-btn" href="?list=PLTYeDakuqA39f-Wx9zs1C74f-m7ekJT4q" data-list="PLTYeDakuqA39f-Wx9zs1C74f-m7ekJT4q">Kids Fun 3</a>
+    <a class="link-btn" href="?list=PLTYeDakuqA3_BedJGknkubpD-ffJKO4Z1" data-list="PLTYeDakuqA3_BedJGknkubpD-ffJKO4Z1">Kids Fun 4</a>
+
+    <p style="color:#8b4500;font-size:0.9rem;margin-top:12px">
+      Tip: Click "Start" to begin in full-screen. Do NOT add youtube.com to Screen Time allowed sites — only allow the specific domains listed in the instructions.
+    </p>
+  </nav>
+
+  <main class="main" role="main">
+    <div id="reload-msg">Player error — retrying... <button onclick="manualReload()">Retry now</button></div>
+
+    <div class="player-wrap" id="player-wrap" aria-live="polite">
+      <!-- injected iframe goes here -->
+    </div>
+
+    <!-- Start overlay (visible when no playlist loaded) -->
+    <div id="start-overlay" aria-hidden="false">
+      <button class="start-btn" id="start-btn">Start & Fullscreen ▶</button>
+      <div class="hint">Tap once to start videos in full-screen. (Safari may ask permission)</div>
+    </div>
+
+    <button id="fs-btn" style="display:none">Enter Full Screen</button>
+  </main>
 </div>
 
 <script>
-function changePlaylist(playlistId) {
-    const player = document.getElementById('player');
-    player.src = `https://www.youtube.com/embed/videoseries?list=${playlistId}&autoplay=1&loop=1&rel=0&modestbranding=1&iv_load_policy=3`;
+/* ---------- Configuration ---------- */
+const DEFAULT_PLAYLIST = 'PLzgk_uTg08P-2LCpM-FK-_Mhb7anv2fBY';
+const MAX_RETRIES = 3;
+const IFRAME_LOAD_TIMEOUT_MS = 9000; // if iframe doesn't load in 9s, retry
+/* Allowed domains (for Screen Time): 
+   - your GitHub Pages URL (e.g. https://yourusername.github.io/kids-english-portal/yourfile.html)
+   - https://www.youtube-nocookie.com
+   - https://www.youtube.com/embed/
+   - https://img.youtube.com
+   - https://i.ytimg.com
+   - https://redirector.googlevideo.com (add other googlevideo hosts if requested)
+*/
+
+/* ---------- UI references ---------- */
+const playerWrap = document.getElementById('player-wrap');
+const startOverlay = document.getElementById('start-overlay');
+const startBtn = document.getElementById('start-btn');
+const fsBtn = document.getElementById('fs-btn');
+const reloadMsg = document.getElementById('reload-msg');
+
+/* state */
+let currentList = null;
+let retryCount = 0;
+let loadTimer = null;
+
+/* helper: build strict nocookie embed URL */
+function buildEmbedUrl(listId) {
+  // autoplay=1 & mute=1 helps autoplay on stricter browsers; playlist param required for proper looping
+  return `https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(listId)}&autoplay=1&mute=1&rel=0&modestbranding=1&iv_load_policy=3&playlist=${encodeURIComponent(listId)}`;
 }
 
-function goFullScreen() {
-    const iframe = document.getElementById('player');
-    if (iframe.requestFullscreen) iframe.requestFullscreen();
-    else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
-    else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+/* insert iframe and attach load/error handling */
+function insertPlayer(listId, tryFullscreen = false) {
+  clearLoadTimer();
+  retryCount = 0;
+  currentList = listId || DEFAULT_PLAYLIST;
+  reloadMsg.style.display = 'none';
+
+  // create iframe
+  const iframe = document.createElement('iframe');
+  iframe.id = 'player-iframe';
+  iframe.className = 'player-frame';
+  iframe.src = buildEmbedUrl(currentList);
+  iframe.allow = 'autoplay; fullscreen';
+  iframe.title = 'Kids English Player';
+
+  // clear previous and insert
+  playerWrap.innerHTML = '';
+  const frameContainer = document.createElement('div');
+  frameContainer.className = 'player-frame';
+  frameContainer.style.height = '100%';
+  frameContainer.style.width = '100%';
+  frameContainer.appendChild(iframe);
+  playerWrap.appendChild(frameContainer);
+
+  // show fs button
+  fsBtn.style.display = 'inline-block';
+
+  // show spinner/message until loaded
+  startOverlay.style.display = 'none';
+  reloadMsg.style.display = 'none';
+
+  // set up load detection
+  let loaded = false;
+  iframe.addEventListener('load', ()=> {
+    loaded = true;
+    clearLoadTimer();
+    reloadMsg.style.display = 'none';
+  });
+
+  // set a timer: if iframe doesn't report load, try reload (max retries)
+  loadTimer = setTimeout(()=>{
+    if (!loaded) {
+      retryCount++;
+      if (retryCount <= MAX_RETRIES) {
+        reloadMsg.style.display = 'block';
+        // quick retry by resetting src (append timestamp param to force reload)
+        iframe.src = buildEmbedUrl(currentList) + '&_r=' + Date.now();
+        // set another timer for next attempt
+        clearLoadTimer();
+        loadTimer = setTimeout(()=>{ if(!loaded) { manualRetryOrNotify(); } }, IFRAME_LOAD_TIMEOUT_MS);
+      } else {
+        // reached max retries — show manual retry option
+        reloadMsg.style.display = 'block';
+      }
+    }
+  }, IFRAME_LOAD_TIMEOUT_MS);
+
+  // If tryFullscreen requested (user gesture), attempt fullscreen immediately
+  if (tryFullscreen) {
+    requestFullscreenOnElement(frameContainer);
+  }
 }
+
+/* clears the load timer */
+function clearLoadTimer() {
+  if (loadTimer) { clearTimeout(loadTimer); loadTimer = null; }
+}
+
+/* manual retry handler used by UI */
+function manualReload() {
+  reloadMsg.style.display = 'none';
+  retryCount = 0;
+  insertPlayer(currentList || DEFAULT_PLAYLIST, true);
+}
+
+/* called when auto retries exhausted */
+function manualRetryOrNotify(){
+  reloadMsg.style.display = 'block';
+}
+
+/* request fullscreen safely (only works as user gesture in many browsers) */
+function requestFullscreenOnElement(el) {
+  if (!el) return;
+  try {
+    if (el.requestFullscreen) el.requestFullscreen();
+    else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+    else if (el.msRequestFullscreen) el.msRequestFullscreen();
+  } catch (e) {
+    // ignore if blocked
+    console.warn('Fullscreen request blocked', e);
+  }
+}
+
+/* helper: start portal flow (Start button click) */
+function startPortal() {
+  // Try to insert player and request fullscreen; this is a user gesture
+  insertPlayer(DEFAULT_PLAYLIST, true);
+}
+
+/* Sidebar link handling:
+   - Links are actual anchors (so navigation is a fallback user gesture if scripts are blocked by ScreenTime)
+   - We also attach click handler to try JS-based loading (works in most cases and can request fullscreen)
+*/
+document.querySelectorAll('a.link-btn').forEach(a=>{
+  a.addEventListener('click', function(ev){
+    // prefer JS loading on user click, but allow navigation fallback if JS is blocked.
+    try {
+      ev.preventDefault();
+      const list = a.getAttribute('data-list');
+      // insert player using this click as a user gesture
+      insertPlayer(list, true);
+      // update URL without reload so bookmark/state preserved (optional)
+      if (history && history.replaceState) {
+        history.replaceState(null,'', '?list=' + encodeURIComponent(list));
+      }
+    } catch (e) {
+      // fallback: allow navigation to occur
+      window.location.href = a.href;
+    }
+  });
+});
+
+/* Start button wiring */
+startBtn.addEventListener('click', function(){
+  // this is a direct user gesture: start player and fullscreen
+  startPortal();
+});
+
+/* fs button to allow manual fullscreen */
+fsBtn.addEventListener('click', function(){
+  const container = playerWrap.querySelector('.player-frame');
+  requestFullscreenOnElement(container);
+});
+
+/* On page load: if URL has ?list=... then show player straight away but show Start overlay if required */
+(function onLoadInit(){
+  const params = new URLSearchParams(location.search);
+  const list = params.get('list');
+  if (list) {
+    // if URL contains list, auto-insert player but DO NOT attempt fullscreen (we need user gesture)
+    // We'll show a small overlay hint to "Tap to enter full screen" if player loads
+    insertPlayer(list, false);
+
+    // In some Screen Time setups the JS may be blocked — the anchor navigation fallback still works,
+    // so keeping the start overlay hidden is fine. We keep start overlay hidden to avoid an extra click.
+    startOverlay.style.display = 'none';
+  } else {
+    // no list in URL — show start overlay, waiting for user gesture
+    startOverlay.style.display = 'flex';
+    fsBtn.style.display = 'none';
+  }
+})();
 </script>
-
 </body>
 </html>
